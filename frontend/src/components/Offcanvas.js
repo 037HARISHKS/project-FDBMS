@@ -48,7 +48,7 @@ function Example() {
             <ListGroup.Item action href="#link5">
             <FaAddressCard size={30} />&nbsp;Projects Handled
             </ListGroup.Item>
-            <ListGroup.Item action href="#link6">
+            <ListGroup.Item  onClick={()=> navigate('/FundedProject')}>
             <FaMoneyBill size={30} />&nbsp;Funded Project Proposals(FPP)
             </ListGroup.Item>
             <ListGroup.Item action href="#link7">

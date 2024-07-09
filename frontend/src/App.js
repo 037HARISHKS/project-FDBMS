@@ -14,6 +14,10 @@ import FacultyRegister from './pages/FacultyRegister';
 import DisplayCertificates from './pages/DisplayCertificate';
 import Certificates from './pages/Certificate';
 import CertificateUploadForm from './pages/AddCertificate';
+import FundedProjectsDisplay from './pages/FundedProjectDisplay';
+import FundedProjects from './pages/FundedProject';
+import DisplaySubjects from './pages/DisplaySubject';
+import AddFPP from './pages/AddFpp';
 
 function App() {
   return (
@@ -33,6 +37,10 @@ function App() {
             <Route path="/displayCertificate" element={<DisplayCertificates/>} />
             <Route path="/Certificates" element={<Certificates/>} />
             <Route path="/certificate-upload" element={<CertificateUploadForm/>} />
+            <Route path='/fpp' element={<FundedProjectsDisplay/>} />
+            <Route path='/FundedProject' element={<FundedProjects/>} />
+            <Route path='/subject' element={<DisplaySubjects/>} />
+            <Route path='/addFppForm' element={<AddFPP/>}/>
           </Routes>
           <Footer/>
       </BrowserRouter>

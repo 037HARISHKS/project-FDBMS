@@ -62,6 +62,7 @@ const fundedProjectProposalSchema = new Schema({
   status: { type: String, enum: ['Approved', 'Rejected'] },
   dateSubmitted: Date,
   dateReviewed: Date,
+  description:String ,
   fileId: String
 });
 

@@ -20,7 +20,7 @@ function Tabs() {
         { title: 'Certifications', icon: <FaCertificate size={30} />, desc: `View Certifications of ${currentUser.data.name}` ,route:'/displayCertificate'},
         { title: 'Awards', icon: <FaAward size={30} />, desc: `View Awards of ${currentUser.data.name}`,route:'/award' },
         { title: 'Projects Handled', icon: <FaAddressCard size={30} />, desc: `View Projects handled by ${currentUser.data.name}`,route:'/project' },
-        { title: 'F D P', icon: <FaMoneyBill size={30} />, desc: `View Funded Project Proposals by ${currentUser.data.name}`,route:'/fpp' },
+        { title: 'F P P', icon: <FaMoneyBill size={30} />, desc: `View Funded Project Proposals by ${currentUser.data.name}`,route:'/fpp' },
         { title: 'Patents', icon: <FaScroll size={30} />, desc: `View Patent rights of ${currentUser.data.name}`,route:'/patent' },
         { title: 'Books', icon: <FaBook size={30} />, desc: `View Books by ${currentUser.data.name}`,route:'/book' }
     ];

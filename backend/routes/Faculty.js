@@ -161,53 +161,6 @@ router.delete('/faculty/:id', async (req, res) => {
   }
 });
 
-// Upload image files (certificates, etc.)
-router.post('/faculty/:id/upload-image', upload.single('image'), async (req, res) => {
-  try {
-    const faculty = await Faculty.findById(req.params.id);
-    if (!faculty) return res.status(404).send();
-    
-    // Determine the schema name (bucketName) based on URL
-    const schemaName = req.baseUrl.split('/').pop().toLowerCase();
-
-    // Update faculty schema array with fileId
-    faculty[schemaName].push({
-      name: req.body.name,
-      issuingOrganization: req.body.issuingOrganization,
-      date: req.body.date,
-      fileId: req.file.id
-    });
-
-    await faculty.save();
-    res.status(200).send(faculty);
-  } catch (error) {
-    res.status(500).send(error);
-  }
-});
-
-// Upload PDF files (publications, patents, projects, etc.)
-router.post('/faculty/:id/upload-pdf', upload.single('pdf'), async (req, res) => {
-  try {
-    const faculty = await Faculty.findById(req.params.id);
-    if (!faculty) return res.status(404).send();
-    
-    // Determine the schema name (bucketName) based on URL
-    const schemaName = req.baseUrl.split('/').pop().toLowerCase();
-
-    // Update faculty schema array with fileId
-    faculty[schemaName].push({
-      title: req.body.title,
-      type: req.body.type,
-      date: req.body.date,
-      fileId: req.file.id
-    });
-
-    await faculty.save();
-    res.status(200).send(faculty);
-  } catch (error) {
-    res.status(500).send(error);
-  }
-});
 
 //-------------------------------------------------------------SUBJECT----------------------------------------------------------------------------
 
@@ -458,17 +411,33 @@ router.post('/faculty/:id/projects', upload.single('pdf'), async (req, res) => {
 //----------------------------------------------FUNDED_PROJECT--------------------------------------------------------------------------------------
 
 // Add a funded project proposal
-router.post('/faculty/:id/funded-project-proposals', async (req, res) => {
-    try {
-      const faculty = await Faculty.findById(req.params.id);
-      if (!faculty) return res.status(404).send();
-      faculty.fundedProjectProposals.push(req.body);
-      await faculty.save();
-      res.status(200).send(faculty);
-    } catch (error) {
-      res.status(500).send(error);
+router.post('/faculty/add-fpp', upload.single('file'), async (req, res) => {
+  try {
+    const { empId, title, status, dateSubmitted, dateReviewed, description } = req.body;
+    const file = req.file;
+
+    const faculty = await Faculty.findOne({ empId });
+    if (!faculty) {
+      return res.status(404).send('Faculty not found');
     }
-  });
+
+    const newFPP = {
+      title,
+      status,
+      dateSubmitted,
+      dateReviewed,
+      description,
+      fileId: file.filename
+    };
+
+    faculty.fundedProjectProposals.push(newFPP);
+    await faculty.save();
+
+    res.status(200).json(faculty); // Send back the updated faculty record
+  } catch (error) {
+    res.status(500).send('Server error');
+  }
+});
   
   // Get all funded project proposals
   router.get('/faculty/:id/funded-project-proposals', async (req, res) => {
