@@ -212,18 +212,33 @@ router.post('/faculty/:id/subjects', async (req, res) => {
 //------------------------------------------------PUBLICATIONS-------------------------------------------------------------------------------------  
   
 // Add a publication
-router.post('/faculty/:id/publications', upload.single('pdf'), async (req, res) => {
-    try {
-      const faculty = await Faculty.findById(req.params.id);
-      if (!faculty) return res.status(404).send({ error: 'Faculty not found' });
-      const publication = { ...req.body, fileId: req.file.id };
-      faculty.publications.push(publication);
-      await faculty.save();
-      res.status(200).send(faculty);
-    } catch (error) {
-      res.status(500).send({ error: error.message });
+router.post('/faculty/add-publication', upload.single('file'), async (req, res) => {
+  try {
+    const { empId, title, category, type, date, description } = req.body;
+    const file = req.file;
+
+    const faculty = await Faculty.findOne({ empId });
+    if (!faculty) {
+      return res.status(404).send('Faculty not found');
     }
-  });
+
+    const newPublication = {
+      title,
+      category,
+      type,
+      date,
+      description,
+      fileId: file.filename
+    };
+
+    faculty.publications.push(newPublication);
+    await faculty.save();
+
+    res.status(200).json(faculty); // Send back the updated faculty record
+  } catch (error) {
+    res.status(500).send('Server error');
+  }
+});
 
 
   // Get all publications
@@ -439,16 +454,7 @@ router.post('/faculty/add-fpp', upload.single('file'), async (req, res) => {
   }
 });
   
-  // Get all funded project proposals
-  router.get('/faculty/:id/funded-project-proposals', async (req, res) => {
-    try {
-      const faculty = await Faculty.findById(req.params.id);
-      if (!faculty) return res.status(404).send();
-      res.status(200).send(faculty.fundedProjectProposals);
-    } catch (error) {
-      res.status(500).send(error);
-    }
-  });
+
   
   // Delete a funded project proposal
   router.delete('/faculty/:id/funded-project-proposals/:proposalId', async (req, res) => {

@@ -36,7 +36,7 @@ function Example() {
             <ListGroup.Item action href="#link1">
             <FaBookReader size={30} />&nbsp;Subjects Handled
             </ListGroup.Item>
-            <ListGroup.Item action href="#link2">
+            <ListGroup.Item onClick={()=> navigate('/Publications')}>
             <FaSwatchbook size={30} />&nbsp;Publications
             </ListGroup.Item>
             <ListGroup.Item   onClick={clickCertificateHandle}>

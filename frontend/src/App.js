@@ -18,6 +18,9 @@ import FundedProjectsDisplay from './pages/FundedProjectDisplay';
 import FundedProjects from './pages/FundedProject';
 import DisplaySubjects from './pages/DisplaySubject';
 import AddFPP from './pages/AddFpp';
+import DisplayPublications from './pages/DisplayPublications';
+import Publications from './pages/Publications';
+import AddPublication from './pages/AddPublication';
 
 function App() {
   return (
@@ -41,6 +44,9 @@ function App() {
             <Route path='/FundedProject' element={<FundedProjects/>} />
             <Route path='/subject' element={<DisplaySubjects/>} />
             <Route path='/addFppForm' element={<AddFPP/>}/>
+            <Route path='/publication' element={<DisplayPublications/>}/>
+            <Route path='/Publications' element={<Publications/>} />
+            <Route path='/addPublicationForm' element={<AddPublication/>} />
           </Routes>
           <Footer/>
       </BrowserRouter>

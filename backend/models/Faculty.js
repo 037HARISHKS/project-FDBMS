@@ -34,7 +34,9 @@ const internshipSchema = new Schema({
 const publicationSchema = new Schema({
   title: String,
   type: { type: String, enum: ['Research Paper', 'Journal', 'Conference Paper'] },
+  category : String,
   date: Date,
+  description : String,
   fileId: String
 });
 
