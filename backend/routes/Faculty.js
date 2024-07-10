@@ -473,18 +473,32 @@ router.post('/faculty/add-fpp', upload.single('file'), async (req, res) => {
 //----------------------------------------------------------PATENTS----------------------------------------------------------------------------------
 
 // Add a patent
-router.post('/faculty/:id/patents', upload.single('pdf'), async (req, res) => {
-    try {
-      const faculty = await Faculty.findById(req.params.id);
-      if (!faculty) return res.status(404).send();
-      const patent = { ...req.body, fileId: req.file.id };
-      faculty.patents.push(patent);
-      await faculty.save();
-      res.status(200).send(faculty);
-    } catch (error) {
-      res.status(500).send(error);
+router.post('/faculty/add-patent', upload.single('pdf'), async (req, res) => {
+  try {
+    const { empId, patentNo, patentTitle, patentDescription, dateOfPublishing } = req.body;
+    const file = req.file;
+
+    const faculty = await Faculty.findOne({ empId });
+    if (!faculty) {
+      return res.status(404).send('Faculty not found');
     }
-  });
+
+    const newPatent = {
+      p_no : patentNo,
+      title: patentTitle,
+      description: patentDescription,
+      dop: new Date(dateOfPublishing),
+      fileId: file.filename
+    };
+
+    faculty.patents.push(newPatent);
+    await faculty.save();
+
+    res.status(200).json(faculty); // Send back the updated faculty record
+  } catch (error) {
+    res.status(500).send('Server error');
+  }
+});
   
   // Get all patents
   router.get('/faculty/:id/patents', async (req, res) => {

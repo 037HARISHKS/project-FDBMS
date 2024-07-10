@@ -71,9 +71,9 @@ const fundedProjectProposalSchema = new Schema({
 
 const patentSchema = new Schema({
   title: String,
-  status: { type: String, enum: ['Filed', 'Granted'] },
-  dateFiled: Date,
-  dateGranted: Date,
+  p_no :String,
+  dop: Date,
+  description : String,
   fileId: String
 });
 

@@ -21,6 +21,9 @@ import AddFPP from './pages/AddFpp';
 import DisplayPublications from './pages/DisplayPublications';
 import Publications from './pages/Publications';
 import AddPublication from './pages/AddPublication';
+import DisplayPatents from './pages/DisplayPatent';
+import Patents from './pages/Patent';
+import PatentForm from './pages/AddPatent';
 
 function App() {
   return (
@@ -47,6 +50,9 @@ function App() {
             <Route path='/publication' element={<DisplayPublications/>}/>
             <Route path='/Publications' element={<Publications/>} />
             <Route path='/addPublicationForm' element={<AddPublication/>} />
+            <Route path='/patent' element={<DisplayPatents/>} />
+            <Route path='/modifyPatent' element={<Patents/>} />
+            <Route path='/patentform' element={<PatentForm/>} />
           </Routes>
           <Footer/>
       </BrowserRouter>

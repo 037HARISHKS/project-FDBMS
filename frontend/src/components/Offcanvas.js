@@ -51,7 +51,7 @@ function Example() {
             <ListGroup.Item  onClick={()=> navigate('/FundedProject')}>
             <FaMoneyBill size={30} />&nbsp;Funded Project Proposals(FPP)
             </ListGroup.Item>
-            <ListGroup.Item action href="#link7">
+            <ListGroup.Item onClick={() => navigate('/modifyPatent')}>
             <FaScroll size={30} />&nbsp;Patents
             </ListGroup.Item>
             <ListGroup.Item action href="#link8">
