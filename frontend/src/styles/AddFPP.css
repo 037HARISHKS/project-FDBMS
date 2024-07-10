@@ -16,7 +16,8 @@
   .addpub {
     border: 2px solid black;
     position: relative;
-    width: 90%; /* Full width for small screens */
+    width: 80%; /* Full width for small screens */
+    min-width: 350px;
     max-width: 600px; /* Limit the width on larger screens */
     padding: 20px;
     display: flex;

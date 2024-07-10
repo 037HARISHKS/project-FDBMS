@@ -2,20 +2,22 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 100%;
+    
     background-color: #f0f0f0;
   }
   
   .addpub {
     border: 2px solid black;
     position: relative;
-    width: 30%;
+    width: 100%;
     padding: 20px;
     display: flex;
     flex-direction: column;
     gap: 15px;
     border-radius: 10px;
     z-index: 3;
+    min-width: 350px;
     overflow: hidden;
     background-color: white;
   }
