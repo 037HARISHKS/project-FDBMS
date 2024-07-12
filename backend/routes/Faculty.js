@@ -371,17 +371,36 @@ router.post('/uploadcertificate', upload.single('upload'), async (req, res) => {
 //-----------------------------------------------------AWARDS--------------------------------------------------------------------------------------
 
 // Add an award
-router.post('/faculty/:id/awards', async (req, res) => {
-    try {
-      const faculty = await Faculty.findById(req.params.id);
-      if (!faculty) return res.status(404).send();
-      faculty.awards.push(req.body);
-      await faculty.save();
-      res.status(200).send(faculty);
-    } catch (error) {
-      res.status(500).send(error);
+router.post('/uploadaward', upload.single('awardImage'), async (req, res) => {
+  const { empId, awardName, organization, date } = req.body;
+
+  if (!req.file) {
+    return res.status(400).send('No file uploaded.');
+  }
+
+  try {
+    const faculty = await Faculty.findOne({ empId });
+    if (!faculty) {
+      return res.status(404).send('User not found.');
     }
-  });
+    console.log(`Faculty found: ${faculty}`);
+
+    const newAward = {
+      name: awardName,
+      issuer: organization,
+      date: date,
+      fileId: req.file.filename
+    };
+
+    faculty.awards.push(newAward);
+    await faculty.save();
+
+    res.status(200).json(faculty); 
+  } catch (error) {
+    console.error('Error during award upload:', error);
+    res.status(500).send('Server error.');
+  }
+});
   
   // Get all awards
   router.get('/faculty/:id/awards', async (req, res) => {

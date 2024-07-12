@@ -26,6 +26,9 @@ import Patents from './pages/Patent';
 import PatentForm from './pages/AddPatent';
 import Subjects from './pages/Subjects';
 import SubjectForm from './pages/AddSubject';
+import Displayaward from './pages/DisplayAwards';
+import Addaward from './pages/Awards';
+import AwardUploadForm from './pages/AddAward';
 
 function App() {
   return (
@@ -57,6 +60,9 @@ function App() {
             <Route path='/patent' element={<DisplayPatents/>} />
             <Route path='/modifyPatent' element={<Patents/>} />
             <Route path='/patentform' element={<PatentForm/>} />
+            <Route path='/award' element={<Displayaward/>} />
+            <Route path='/modifyAwards' element={<Addaward/>} />
+            <Route path='/awardform' element={<AwardUploadForm/>} />
           </Routes>
           <Footer/>
       </BrowserRouter>

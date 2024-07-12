@@ -42,7 +42,7 @@ function Example() {
             <ListGroup.Item   onClick={clickCertificateHandle}>
             <FaCertificate size={30} />&nbsp;Certifications
             </ListGroup.Item>
-            <ListGroup.Item action href="#link4">
+            <ListGroup.Item onClick={() => navigate('/modifyAwards')}>
             <FaAward size={30} />&nbsp;Awards
             </ListGroup.Item>
             <ListGroup.Item action href="#link5">
