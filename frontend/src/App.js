@@ -24,6 +24,8 @@ import AddPublication from './pages/AddPublication';
 import DisplayPatents from './pages/DisplayPatent';
 import Patents from './pages/Patent';
 import PatentForm from './pages/AddPatent';
+import Subjects from './pages/Subjects';
+import SubjectForm from './pages/AddSubject';
 
 function App() {
   return (
@@ -46,6 +48,8 @@ function App() {
             <Route path='/fpp' element={<FundedProjectsDisplay/>} />
             <Route path='/FundedProject' element={<FundedProjects/>} />
             <Route path='/subject' element={<DisplaySubjects/>} />
+            <Route path='/modifySubject' element={<Subjects/>}/>
+            <Route path='/Subjectform' element={<SubjectForm/>} />
             <Route path='/addFppForm' element={<AddFPP/>}/>
             <Route path='/publication' element={<DisplayPublications/>}/>
             <Route path='/Publications' element={<Publications/>} />

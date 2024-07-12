@@ -1,15 +1,13 @@
 import React from "react";
-import { Container, Row, Col, Card, ProgressBar } from "react-bootstrap";
-import '../styles/Subjects.css';
+import { Container, Row, Col, Card, ProgressBar, Button } from "react-bootstrap";
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux";
+import '../styles/Subjects.css';
 
-
-
-const DisplaySubjects = () => {
-
+const Subjects = () => {
   const { currentUser } = useSelector(state => state.user);
   const subjectCards = currentUser.data.subjectsHandled;
- 
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -20,7 +18,9 @@ const DisplaySubjects = () => {
             <h1 style={{ fontSize: '30px', fontWeight: 'bold' }}>{currentUser.data.name}</h1>
             <h2 style={{ fontSize: '15px', fontWeight: 'lighter' }}>{currentUser.data.educationalBackground}</h2>
           </Col>
-          
+          <div className="text-center my-4">
+            <Button variant="success" onClick={() => { navigate('/Subjectform') }}>Add Percentage</Button>
+          </div>
         </Row>
       </Container>
 
@@ -53,7 +53,6 @@ const DisplaySubjects = () => {
       </Container>
     </div>
   );
-
 };
 
-export default DisplaySubjects;
+export default Subjects;

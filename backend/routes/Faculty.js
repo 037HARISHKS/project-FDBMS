@@ -165,18 +165,49 @@ router.delete('/faculty/:id', async (req, res) => {
 //-------------------------------------------------------------SUBJECT----------------------------------------------------------------------------
 
 // Add a subject
-router.post('/faculty/:id/subjects', async (req, res) => {
-    try {
-      const faculty = await Faculty.findById(req.params.id);
-      if (!faculty) return res.status(404).send();
-      faculty.subjectsHandled.push(req.body);
+router.post('/update-subject-percentage', async (req, res) => {
+  const { empId, subjectName, courseCode, examType, percentage } = req.body;
+
+  try {
+      // Find the faculty by empId
+      let faculty = await Faculty.findOne({ empId });
+
+      if (!faculty) {
+          return res.status(404).json({ message: 'Faculty not found' });
+      }
+
+      // Find the subject
+      let subject = faculty.subjectsHandled.find(sub => sub.name === subjectName && sub.coursecode === courseCode);
+
+      if (!subject) {
+          // If the subject does not exist, create a new subject
+          subject = {
+              name: subjectName,
+              coursecode: courseCode,
+              internalPassPercentages: []
+          };
+          faculty.subjectsHandled.push(subject);
+      }
+
+      // Find the examType in the subject's internalPassPercentages array
+      let passPercentage = subject.internalPassPercentages.find(pass => pass.examType === examType);
+
+      if (passPercentage) {
+          // If the examType exists, update the percentage
+          passPercentage.percentage = percentage;
+      } else {
+          // If the examType does not exist, add a new entry
+          subject.internalPassPercentages.push({ examType, percentage });
+      }
+
+      // Save the updated faculty document
       await faculty.save();
-      res.status(200).send(faculty);
-    } catch (error) {
-      res.status(500).send(error);
-    }
-  });
-  
+
+      res.json(faculty);
+  } catch (error) {
+      res.status(500).json({ message: 'Server error', error });
+  }
+});
   // Get all subjects
   router.get('/faculty/:id/subjects', async (req, res) => {
     try {

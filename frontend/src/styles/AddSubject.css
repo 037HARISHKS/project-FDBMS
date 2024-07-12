@@ -1,0 +1,131 @@
+/* Reset some basic styles for better cross-browser compatibility */
+body, html, div, form, input, select, label, button {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Styling for the form container */
+  .form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f2f5;
+    padding: 20px;
+  }
+  
+  /* Styling for the form wrapper */
+  .form-wrapper {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+  }
+  
+  /* Styling for the form header */
+  .form-header {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+  }
+  
+  /* Styling for form groups */
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+  }
+  
+  /* Styling for labels */
+  .form-group label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #555;
+  }
+  
+  /* Styling for input fields */
+  .form-group input, .form-group select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    color: #333;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+  
+  .form-group input:focus, .form-group select:focus {
+    border-color: #007bff;
+  }
+  
+  /* Styling for form actions */
+  .form-actions {
+    text-align: center;
+  }
+  
+  /* Styling for submit button */
+  .submit-btn {
+    background-color: #007bff;
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .submit-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Grid layout for larger screens */
+  @media (min-width: 768px) {
+    .form-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+  
+    .form-header {
+      grid-column: 1 / -1;
+    }
+  
+    .form-group {
+      flex-direction: column;
+    }
+  
+    .form-actions {
+      grid-column: 1 / -1;
+    }
+  }
+  
+  /* Responsive styling for small screens */
+  @media (max-width: 768px) {
+    .form-wrapper {
+      padding: 20px;
+    }
+  
+    .form-header {
+      font-size: 20px;
+    }
+  
+    .form-group label {
+      font-size: 14px;
+    }
+  
+    .form-group input, .form-group select {
+      font-size: 14px;
+    }
+  
+    .submit-btn {
+      font-size: 14px;
+      padding: 10px 16px;
+    }
+  }
+  

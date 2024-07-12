@@ -33,7 +33,7 @@ function Example() {
         </Offcanvas.Header>
         <Offcanvas.Body>
         <ListGroup>
-            <ListGroup.Item action href="#link1">
+            <ListGroup.Item  onClick={() => navigate('/modifySubject')}>
             <FaBookReader size={30} />&nbsp;Subjects Handled
             </ListGroup.Item>
             <ListGroup.Item onClick={()=> navigate('/Publications')}>

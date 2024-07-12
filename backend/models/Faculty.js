@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 
 const passPercentSchema = new Schema({
-  examType: { type: String, enum: ['IAT-1', 'IAT-2', 'IAT-3', 'End Semester'] },
+  examType: { type: String, enum: ['IAT-1', 'IAT-2', 'IAT-3', 'Odd' ,'Even'] },
   percentage: Number
 });
 
