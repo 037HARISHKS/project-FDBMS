@@ -584,17 +584,37 @@ router.post('/faculty/add-patent', upload.single('pdf'), async (req, res) => {
 //------------------------------------------------------BOOKS------------------------------------------------------------------------------
 
 // Add a book
-router.post('/faculty/:id/books', async (req, res) => {
-    try {
-      const faculty = await Faculty.findById(req.params.id);
-      if (!faculty) return res.status(404).send();
-      faculty.books.push(req.body);
-      await faculty.save();
-      res.status(200).send(faculty);
-    } catch (error) {
-      res.status(500).send(error);
+router.post('/uploadbook', upload.single('pdf'), async (req, res) => {
+  const { academicYear, title, author, description, ISBN, empId } = req.body;
+  if (!req.file) {
+    return res.status(400).send('No file uploaded.');
+  }
+
+  try {
+    const faculty = await Faculty.findOne({empId });
+    if (!faculty) {
+      return res.status(404).send('User not found.');
     }
-  });
+    console.log(`Faculty found: ${faculty}`);
+
+    const newBook = {
+      academicYear: academicYear,
+      title: title,
+      author: author,
+      description: description,
+      ISBN: ISBN,
+      fileId: req.file.filename
+    };
+
+    faculty.books.push(newBook);
+    await faculty.save();
+
+    res.status(200).json(faculty);
+  } catch (error) {
+    console.error('Error during book upload:', error);
+    res.status(500).send('Server error.');
+  }
+});
   
   // Get all books
   router.get('/faculty/:id/books', async (req, res) => {

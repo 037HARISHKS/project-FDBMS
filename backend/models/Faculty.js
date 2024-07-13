@@ -80,10 +80,11 @@ const patentSchema = new Schema({
 
 const bookSchema = new Schema({
   title: String,
-  coAuthors: [String],
-  publisher: String,
-  datePublished: Date,
-  fileId: String
+  author: String,
+  academicYear: String ,
+  fileId: String,
+  description : String,
+  ISBN : String
 });
 
 

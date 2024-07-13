@@ -29,6 +29,9 @@ import SubjectForm from './pages/AddSubject';
 import Displayaward from './pages/DisplayAwards';
 import Addaward from './pages/Awards';
 import AwardUploadForm from './pages/AddAward';
+import Books from './pages/Books';
+import DisplayBooks from './pages/DisplayBooks';
+import BookForm from './pages/AddBooks';
 
 function App() {
   return (
@@ -63,6 +66,9 @@ function App() {
             <Route path='/award' element={<Displayaward/>} />
             <Route path='/modifyAwards' element={<Addaward/>} />
             <Route path='/awardform' element={<AwardUploadForm/>} />
+            <Route path='/book' element={<DisplayBooks/>} />
+            <Route path='/modifyBook' element={ <Books/>} />
+            <Route path='/bookform' element={<BookForm/>} />
           </Routes>
           <Footer/>
       </BrowserRouter>
