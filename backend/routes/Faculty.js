@@ -414,18 +414,25 @@ router.post('/uploadaward', upload.single('awardImage'), async (req, res) => {
   });
   
   // Delete an award
-  router.delete('/faculty/:id/awards/:awardId', async (req, res) => {
+  router.delete('/delawards', async (req, res) => {
+    const { empId, id } = req.body;
     try {
-      const faculty = await Faculty.findById(req.params.id);
-      if (!faculty) return res.status(404).send();
-      faculty.awards.id(req.params.awardId).remove();
-      await faculty.save();
-      res.status(200).send(faculty);
+      const faculty = await Faculty.findOne({ empId });
+      if (!faculty) return res.status(404).send('Faculty not found');
+  
+      const awardIndex = faculty.awards.findIndex(award => award._id.toString() === id);
+      if (awardIndex !== -1) {
+        faculty.awards.splice(awardIndex, 1);
+        await faculty.save();
+        res.status(200).json(faculty);
+      } else {
+        res.status(404).send('Award not found');
+      }
     } catch (error) {
       res.status(500).send(error);
     }
   });
-
+  
 //------------------------------------------EVENTS HANDELED--------------------------------------------------------------------------------------------
 
 router.post('/uploadevent', upload.single('eventimg'), async (req, res) => {
