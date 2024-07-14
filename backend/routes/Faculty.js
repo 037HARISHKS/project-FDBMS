@@ -426,7 +426,58 @@ router.post('/uploadaward', upload.single('awardImage'), async (req, res) => {
     }
   });
 
+//------------------------------------------EVENTS HANDELED--------------------------------------------------------------------------------------------
+
+router.post('/uploadevent', upload.single('eventimg'), async (req, res) => {
+  const { empId, eventname, eventdes, eventdate } = req.body;
+
+  if (!req.file) {
+      return res.status(400).send('No file uploaded.');
+  }
+
+  try {
+      const faculty = await Faculty.findOne({ empId });
+      if (!faculty) {
+          return res.status(404).send('User not found.');
+      }
+
+      const newEvent = {
+          name:eventname,
+          description: eventdes,
+          date:eventdate,
+          image: req.file.filename
+      };
+
+      faculty.events.push(newEvent);
+      await faculty.save();
+
+      res.status(200).json(faculty);
+  } catch (error) {
+      console.error(error); // Log the error for debugging
+      res.status(500).send('Server error.');
+  }
+});
   
+
+router.delete('/delevents', async (req, res) => {
+  const { empId, id } = req.body;
+  try {
+    const faculty = await Faculty.findOne({empId});
+    if (!faculty) return res.status(404).send('Faculty not found');
+    
+    const eventIndex = faculty.events.findIndex(event => event._id.toString() === id);
+    if (eventIndex !== -1) {
+      faculty.events.splice(eventIndex, 1);
+      await faculty.save();
+      res.status(200).json(faculty);
+    } else {
+      res.status(404).send('Event not found');
+    }
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
 //---------------------------------------------PROJECTS_HANDLED------------------------------------------------------------------------------------
 
 // Add a project

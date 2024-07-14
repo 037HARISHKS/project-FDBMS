@@ -32,6 +32,9 @@ import AwardUploadForm from './pages/AddAward';
 import Books from './pages/Books';
 import DisplayBooks from './pages/DisplayBooks';
 import BookForm from './pages/AddBooks';
+import Eventpage from './pages/DisplayEvents';
+import AddEvents from './pages/Event';
+import EventForm from './pages/AddEvents';
 
 function App() {
   return (
@@ -69,6 +72,9 @@ function App() {
             <Route path='/book' element={<DisplayBooks/>} />
             <Route path='/modifyBook' element={ <Books/>} />
             <Route path='/bookform' element={<BookForm/>} />
+            <Route path='/eventHandled' element={<Eventpage/>} />
+            <Route path='/modifyEvents' element={<AddEvents/>}/>
+            <Route path='/eventform' element={<EventForm/>}/>
           </Routes>
           <Footer/>
       </BrowserRouter>

@@ -104,6 +104,13 @@ const consultancySchema = new Schema({
     description: String,
     fileId: String
 });
+
+const eventSchema = new Schema({
+          name:String,
+          description: String,
+          date:String,
+          image: String
+});
     
 
 // Main Faculty Schema
@@ -123,6 +130,7 @@ const facultySchema = new Schema({
   internships: [internshipSchema],
   publications: [publicationSchema],
   awards: [awardSchema],
+  events : [eventSchema],
   projectsHandled: [projectSchema],
   fundedProjectProposals: [fundedProjectProposalSchema],
   patents: [patentSchema],
