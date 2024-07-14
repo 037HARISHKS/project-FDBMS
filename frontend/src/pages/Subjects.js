@@ -1,28 +1,61 @@
-import React from "react";
-import { Container, Row, Col, Card, ProgressBar, Button } from "react-bootstrap";
+import React, { useState } from "react";
+import { Container, Row, Col, Card, ProgressBar, Button, Alert } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { MdDelete } from 'react-icons/md';
+import axios from 'axios';
+import { signInSuccess } from '../redux/user/userSlice';
 import '../styles/Subjects.css';
 
 const Subjects = () => {
   const { currentUser } = useSelector(state => state.user);
-  const subjectCards = currentUser.data.subjectsHandled;
+  const dispatch = useDispatch();
+  const subjectCards = currentUser?.data?.subjectsHandled || [];
   const navigate = useNavigate();
+
+  const [status, setStatus] = useState({
+    loading: false,
+    success: false,
+    error: null,
+  });
+
+  const handleDelete = async (subjectId) => {
+    setStatus({ loading: true, success: false, error: null });
+    try {
+      const response = await axios.delete('http://localhost:5000/api/delsubjects', {
+        data: {
+          empId: currentUser?.data?.empId, // Use optional chaining
+          id: subjectId,
+        },
+      });
+      if (response.status === 200) {
+        dispatch(signInSuccess(response));
+        setStatus({ loading: false, success: true, error: null });
+      }
+    } catch (error) {
+      const errorMessage = error.response && error.response.data ? JSON.stringify(error.response.data) : 'Server error';
+      setStatus({ loading: false, success: false, error: errorMessage });
+    }
+  };
 
   return (
     <div>
       <Container className="d-flex px-4" style={{ justifyContent: "center" }}>
         <Row className="text-center">
           <Col>
-            <h1>Subject Handle BY</h1>
+            <h1>Subjects Handled By</h1>
             <h1 style={{ fontSize: '30px', fontWeight: 'bold' }}>{currentUser.data.name}</h1>
             <h2 style={{ fontSize: '15px', fontWeight: 'lighter' }}>{currentUser.data.educationalBackground}</h2>
           </Col>
           <div className="text-center my-4">
-            <Button variant="success" onClick={() => { navigate('/Subjectform') }}>Add Percentage</Button>
+            <Button variant="success" onClick={() => { navigate('/Subjectform') }}>Add Subject</Button>
           </div>
         </Row>
       </Container>
+
+      {status.loading && <Alert variant="info">Deleting...</Alert>}
+      {status.success && <Alert variant="success">Subject deleted successfully.</Alert>}
+      {status.error && <Alert variant="danger">{status.error}</Alert>}
 
       <Container className="mt-4">
         <Row>
@@ -45,6 +78,9 @@ const Subjects = () => {
                       </div>
                     ))}
                   </Card.Text>
+                  <Button className="custom-button" variant="danger" onClick={() => handleDelete(subject._id)}>
+                    <MdDelete />
+                  </Button>
                 </Card.Body>
               </Card>
             </Col>

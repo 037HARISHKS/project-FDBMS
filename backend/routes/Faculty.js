@@ -220,24 +220,25 @@ router.post('/update-subject-percentage', async (req, res) => {
   });
   
   // Delete a subject
-  router.delete('/faculty/:id/subjects/:subjectId', async (req, res) => {
-    const facultyId = req.params.id;
-    const subjectId = req.params.subjectId;
-
+  router.delete('/delsubjects', async (req, res) => {
+    const { empId, id } = req.body;
     try {
-        const faculty = await Faculty.findById(facultyId);
-        if (!faculty) {
-            return res.status(404).json({ error: 'Faculty not found' });
-        }
-
-        faculty.subjectsHandled = faculty.subjectsHandled.filter(subject => subject._id != subjectId);
+      const faculty = await Faculty.findOne({ empId });
+      if (!faculty) return res.status(404).send('Faculty not found');
+  
+      const subjectIndex = faculty.subjectsHandled.findIndex(subject => subject._id.toString() === id);
+      if (subjectIndex !== -1) {
+        faculty.subjectsHandled.splice(subjectIndex, 1);
         await faculty.save();
-
-        res.status(200).json(faculty.subjectsHandled);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
+        res.status(200).json(faculty);
+      } else {
+        res.status(404).send('Subject not found');
+      }
+    } catch (error) {
+      res.status(500).send(error);
     }
-});
+  });
+  
 
 
 //------------------------------------------------PUBLICATIONS-------------------------------------------------------------------------------------  
