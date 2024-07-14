@@ -284,23 +284,25 @@ router.post('/faculty/add-publication', upload.single('file'), async (req, res) 
   });
   
   // Delete a publication
-  router.delete('/faculty/:id/publications/:publicationId', async (req, res) => {
+  router.delete('/delpublications', async (req, res) => {
+    const { empId, id } = req.body;
     try {
-      const faculty = await Faculty.findById(req.params.id);
-      if (!faculty) return res.status(404).send();
-      const publication = faculty.publications.id(req.params.publicationId);
-      if (publication) {
-        await gfs.remove({ _id: publication.fileId, root: 'uploads' });
-        publication.remove();
+      const faculty = await Faculty.findOne({ empId });
+      if (!faculty) return res.status(404).send('Faculty not found');
+  
+      const publicationIndex = faculty.publications.findIndex(pub => pub._id.toString() === id);
+      if (publicationIndex !== -1) {
+        faculty.publications.splice(publicationIndex, 1);
         await faculty.save();
-        res.status(200).send(faculty);
+        res.status(200).json(faculty);
       } else {
-        res.status(404).send();
+        res.status(404).send('Publication not found');
       }
     } catch (error) {
       res.status(500).send(error);
     }
   });
+  
 
   
 //-------------------------------------------------CERTIFICATIONS----------------------------------------------------------------------------------
@@ -566,17 +568,25 @@ router.post('/faculty/add-fpp', upload.single('file'), async (req, res) => {
 
   
   // Delete a funded project proposal
-  router.delete('/faculty/:id/funded-project-proposals/:proposalId', async (req, res) => {
+  router.delete('/delprojects', async (req, res) => {
+    const { empId, id } = req.body;
     try {
-      const faculty = await Faculty.findById(req.params.id);
-      if (!faculty) return res.status(404).send();
-      faculty.fundedProjectProposals.id(req.params.proposalId).remove();
-      await faculty.save();
-      res.status(200).send(faculty);
+      const faculty = await Faculty.findOne({ empId });
+      if (!faculty) return res.status(404).send('Faculty not found');
+  
+      const projectIndex = faculty.fundedProjectProposals.findIndex(project => project._id.toString() === id);
+      if (projectIndex !== -1) {
+        faculty.fundedProjectProposals.splice(projectIndex, 1);
+        await faculty.save();
+        res.status(200).json(faculty);
+      } else {
+        res.status(404).send('Project not found');
+      }
     } catch (error) {
       res.status(500).send(error);
     }
   });
+  
 
   
 //----------------------------------------------------------PATENTS----------------------------------------------------------------------------------
