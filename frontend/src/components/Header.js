@@ -34,11 +34,7 @@ const Header = () => {
           <div className="text-end">
             {currentUser ? (
               <DropdownButton id="dropdown-button" title="Sign-Out" style={{ padding: '5px 10px', fontSize: '12px' ,width:'150' }} >
-                <DropdownHeader>
-                  <span className='fw-bold'>{currentUser.data.name}</span><br/>
-                  <span>{currentUser.data.email} </span>
-                </DropdownHeader>
-                <Dropdown.Divider/>
+                
                 <Dropdown.Item><Link to={'/dashboard'}>Profile</Link>  </Dropdown.Item>
                  <Dropdown.Item><Link to={'/'}>Sign-Out</Link>  </Dropdown.Item>
               </DropdownButton>

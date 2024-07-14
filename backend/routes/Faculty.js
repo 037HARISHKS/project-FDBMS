@@ -349,24 +349,25 @@ router.post('/uploadcertificate', upload.single('upload'), async (req, res) => {
   });
   
   // Delete a certification
-  router.delete('/faculty/:id/certifications/:certificationId', async (req, res) => {
+  router.delete('/delcertificates', async (req, res) => {
+    const { empId, id } = req.body;
     try {
-      const faculty = await Faculty.findById(req.params.id);
-      if (!faculty) return res.status(404).send();
-      const certification = faculty.certifications.id(req.params.certificationId);
-      if (certification) {
-        await gfs.remove({ _id: certification.fileId, root: 'uploads' });
-        certification.remove();
+      const faculty = await Faculty.findOne({ empId });
+      if (!faculty) return res.status(404).send('Faculty not found');
+  
+      const certIndex = faculty.certifications.findIndex(cert => cert._id.toString() === id);
+      if (certIndex !== -1) {
+        faculty.certifications.splice(certIndex, 1);
         await faculty.save();
-        res.status(200).send(faculty);
+        res.status(200).json(faculty);
       } else {
-        res.status(404).send();
+        res.status(404).send('Certificate not found');
       }
     } catch (error) {
       res.status(500).send(error);
     }
   });
-
+  
   
 //-----------------------------------------------------AWARDS--------------------------------------------------------------------------------------
 
@@ -620,24 +621,25 @@ router.post('/faculty/add-patent', upload.single('pdf'), async (req, res) => {
   });
   
   // Delete a patent
-  router.delete('/faculty/:id/patents/:patentId', async (req, res) => {
+  router.delete('/delpatents', async (req, res) => {
+    const { empId, id } = req.body;
     try {
-      const faculty = await Faculty.findById(req.params.id);
-      if (!faculty) return res.status(404).send();
-      const patent = faculty.patents.id(req.params.patentId);
-      if (patent) {
-        await gfs.remove({ _id: patent.fileId, root: 'uploads' });
-        patent.remove();
+      const faculty = await Faculty.findOne({ empId });
+      if (!faculty) return res.status(404).send('Faculty not found');
+  
+      const patentIndex = faculty.patents.findIndex(patent => patent._id.toString() === id);
+      if (patentIndex !== -1) {
+        faculty.patents.splice(patentIndex, 1);
         await faculty.save();
-        res.status(200).send(faculty);
+        res.status(200).json(faculty);
       } else {
-        res.status(404).send();
+        res.status(404).send('Patent not found');
       }
     } catch (error) {
       res.status(500).send(error);
     }
   });
-
+  
   
 //------------------------------------------------------BOOKS------------------------------------------------------------------------------
 
@@ -686,18 +688,25 @@ router.post('/uploadbook', upload.single('pdf'), async (req, res) => {
   });
   
   // Delete a book
-  router.delete('/faculty/:id/books/:bookId', async (req, res) => {
+  router.delete('/delbooks', async (req, res) => {
+    const { empId, id } = req.body;
     try {
-      const faculty = await Faculty.findById(req.params.id);
-      if (!faculty) return res.status(404).send();
-      faculty.books.id(req.params.bookId).remove();
-      await faculty.save();
-      res.status(200).send(faculty);
+      const faculty = await Faculty.findOne({ empId });
+      if (!faculty) return res.status(404).send('Faculty not found');
+  
+      const bookIndex = faculty.books.findIndex(book => book._id.toString() === id);
+      if (bookIndex !== -1) {
+        faculty.books.splice(bookIndex, 1);
+        await faculty.save();
+        res.status(200).json(faculty);
+      } else {
+        res.status(404).send('Book not found');
+      }
     } catch (error) {
       res.status(500).send(error);
     }
   });
-
+  
   
 //------------------------------------------------------FDP---------------------------------------------------------------------------------------
 
