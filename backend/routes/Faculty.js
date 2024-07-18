@@ -119,12 +119,16 @@ router.get('/dashboard', (req, res) => {
 });
 
 // Read all faculty
-router.get('/faculty', async (req, res) => {
+router.get('/facultydetails', async (req, res) => {
   try {
-    const faculty = await Faculty.find();
-    res.status(200).send(faculty);
+    const fac = await Faculty.find({});
+    if (!fac) {
+      res.status(500).send('faculty not found');
+    } else {
+      res.status(200).send(fac);
+    }
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).send('Error retrieving faculty details');
   }
 });
 
@@ -151,13 +155,19 @@ router.put('/faculty/:id', async (req, res) => {
 });
 
 // Delete a faculty by ID
-router.delete('/faculty/:id', async (req, res) => {
+router.delete('/delfac', async (req, res) => {
+  const { facid } = req.body;
   try {
-    const faculty = await Faculty.findByIdAndDelete(req.params.id);
-    if (!faculty) return res.status(404).send();
-    res.status(200).send(faculty);
+    const faculty = await Faculty.findByIdAndDelete(facid);
+    const fa=await Faculty()
+    if (!faculty) {
+      return res.status(404).send('Faculty not found');
+    }
+    
+    res.status(200).send('Faculty deleted successfully');
   } catch (error) {
-    res.status(500).send(error);
+    console.error(error.message);
+    res.status(500).send('Server error');
   }
 });
 
@@ -167,6 +177,8 @@ router.delete('/faculty/:id', async (req, res) => {
 // Add a subject
 router.post('/update-subject-percentage', async (req, res) => {
   const { empId, subjectName, courseCode, examType, percentage } = req.body;
+  
+  console.log('Received data:', req.body);  // Debug statement
 
   try {
       // Find the faculty by empId
@@ -208,16 +220,7 @@ router.post('/update-subject-percentage', async (req, res) => {
       res.status(500).json({ message: 'Server error', error });
   }
 });
-  // Get all subjects
-  router.get('/faculty/:id/subjects', async (req, res) => {
-    try {
-      const faculty = await Faculty.findById(req.params.id);
-      if (!faculty) return res.status(404).send();
-      res.status(200).send(faculty.subjectsHandled);
-    } catch (error) {
-      res.status(500).send(error);
-    }
-  });
+
   
   // Delete a subject
   router.delete('/delsubjects', async (req, res) => {

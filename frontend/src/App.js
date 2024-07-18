@@ -35,6 +35,7 @@ import BookForm from './pages/AddBooks';
 import Eventpage from './pages/DisplayEvents';
 import AddEvents from './pages/Event';
 import EventForm from './pages/AddEvents';
+import View from './pages/viewFaculty';
 
 function App() {
   return (
@@ -75,6 +76,7 @@ function App() {
             <Route path='/eventHandled' element={<Eventpage/>} />
             <Route path='/modifyEvents' element={<AddEvents/>}/>
             <Route path='/eventform' element={<EventForm/>}/>
+            <Route path='/viewfaculty' element={<View/>}/>
           </Routes>
           <Footer/>
       </BrowserRouter>

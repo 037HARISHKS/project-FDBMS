@@ -38,7 +38,7 @@ const Contact = () => {
             </Form.Group>
 
             <div className="d-flex justify-content-center">
-              <Button variant="primary" type="submit" className="mt-3" style={{ width: '25%' }}>
+              <Button variant="primary" type="submit" className="mt-3" style={{ width: '40%' }}>
                 Submit
               </Button>
             </div>

@@ -68,7 +68,7 @@ const PatentForm = () => {
   };
 
   return (
-    <Container className="d-flex justify-content-center align-items-center vh-100">
+    <Container className="d-flex justify-content-center align-items-center mt-4 mb-2">
       <Form className="form-container p-4 shadow-sm rounded" onSubmit={handleSubmit}>
         <h2 className="text-center mb-4">Patent Details</h2>
         

@@ -26,7 +26,7 @@ const CenteredContent = () => {
           </div>
         </Col>
       </Row>
-      <div className="overflow-hidden" style={{ maxHeight: '30vh' }}>
+      <div className="overflow-hidden" style={{ maxHeight: '40vh' }}>
         <Container className="px-5">
           <Image
             src={Emp}

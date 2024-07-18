@@ -1,17 +1,29 @@
-import React from 'react';
-
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Container, Row, Col, Image } from 'react-bootstrap';
+import { Container, Row, Col, Image, Form } from 'react-bootstrap';
 
 function Eventpage() {
-  
-  const {currentUser} = useSelector(state => state.user);
-  const events = currentUser.data.events 
-  
+  const { currentUser } = useSelector(state => state.user);
+  const events = currentUser.data.events;
 
-  // Debugging output
-  console.log('Current User:', currentUser);
-  console.log('Events:', events);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredEvents, setFilteredEvents] = useState(events);
+
+  const handleSearch = (event) => {
+    const term = event.target.value;
+    setSearchTerm(term);
+
+    const filtered = events.filter(event => {
+      const name = event.name?.toLowerCase() || '';
+      const description = event.description?.toLowerCase() || '';
+      const date = event.date?.toLowerCase() || '';
+      return name.includes(term.toLowerCase()) ||
+             description.includes(term.toLowerCase()) ||
+             date.includes(term.toLowerCase());
+    });
+
+    setFilteredEvents(filtered);
+  };
 
   return (
     <Container className='mt-5 mb-5' style={{ width: '100%' }}>
@@ -24,8 +36,18 @@ function Eventpage() {
         </Row>
       </Container>
       <Container>
-        {events.length > 0 ? (
-          events.map((event, index) => (
+        <Row className='mb-3'>
+          <Col>
+            <Form.Control
+              type="text"
+              placeholder="Search by name, description, or date"
+              value={searchTerm}
+              onChange={handleSearch}
+            />
+          </Col>
+        </Row>
+        {filteredEvents.length > 0 ? (
+          filteredEvents.map((event, index) => (
             <Row className='mt-5 mb-5 slide-in-left' key={index}>
               <Col xs={12} md={4} className='d-flex justify-content-center'>
                 <Image
@@ -49,7 +71,6 @@ function Eventpage() {
           </Row>
         )}
       </Container>
-      
     </Container>
   );
 }

@@ -24,7 +24,7 @@ const SubjectForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    console.log('Form Data before API call:', formData);  // Debug statement
 
     axios.post('http://localhost:5000/api/update-subject-percentage', {
       empId: currentUser.data.empId,
@@ -50,12 +50,12 @@ const SubjectForm = () => {
   };
 
   return (
-    <div className="form-container">
-      <div className="form-wrapper">
-        <div className="form-header">SUBJECT DETAILS</div>
+    <div className="subject-form-container">
+      <div className="subject-form-wrapper">
+        <div className="subject-form-header">SUBJECT DETAILS</div>
         
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
+        <form onSubmit={handleSubmit} style={{width:'100%'}}>
+          <div className="subject-form-group">
             <label htmlFor="title">Subject Name</label>
             <input
               type="text"
@@ -67,7 +67,7 @@ const SubjectForm = () => {
             />
           </div>
 
-          <div className="form-group">
+          <div className="subject-form-group">
             <label htmlFor="subjectCode">Subject Code</label>
             <input
               type="text"
@@ -79,7 +79,7 @@ const SubjectForm = () => {
             />
           </div>
 
-          <div className="form-group">
+          <div className="subject-form-group">
             <label htmlFor="ExamType">Exam Type</label>
             <select
               id="ExamType"
@@ -96,7 +96,7 @@ const SubjectForm = () => {
             </select>
           </div>
 
-          <div className="form-group">
+          <div className="subject-form-group">
             <label htmlFor="semesterPercentage">Pass Percentage</label>
             <input
               type="number"
@@ -108,7 +108,7 @@ const SubjectForm = () => {
             />
           </div>
 
-          <div className="form-actions">
+          <div className="subject-form-actions">
             <button type="submit" className="submit-btn">
               Add Subject
             </button>

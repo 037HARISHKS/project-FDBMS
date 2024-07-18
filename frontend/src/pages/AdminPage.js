@@ -14,8 +14,8 @@ function AdminPage() {
     navigate('/adminRegister');
   }
 
-  const handleDelete=()=>{
-    navigate('/deleteFaculty');
+  const handleview=()=>{
+    navigate('/viewfaculty')
   }
   return (
     <Container className='d-flex flex-column justify-content-center align-items-center vh-100'>
@@ -32,8 +32,9 @@ function AdminPage() {
         <Col md={4} className='mb-4'>
           <Button variant='primary' style={{ width: '200px' }} onClick={handleAddAdmin}>Add Admin</Button>
         </Col>
+       
         <Col md={4} className='mb-4'>
-          <Button variant='danger' style={{ width: '200px' }} onClick={handleDelete}>Delete Faculty</Button>
+          <Button variant='secondary' style={{ width: '200px' }} onClick={handleview}>View Faculty</Button>
         </Col>
       </Row>
     </Container>
