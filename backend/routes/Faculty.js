@@ -133,13 +133,15 @@ router.get('/facultydetails', async (req, res) => {
 });
 
 // Read a single faculty by ID
-router.get('/faculty/:id', async (req, res) => {
+router.post('/facultyview', async (req, res) => {
   try {
-    const faculty = await Faculty.findById(req.params.id);
-    if (!faculty) return res.status(404).send();
-    res.status(200).send(faculty);
+      const faculty = await Faculty.findById(req.body.facid);
+      if (!faculty) {
+          return res.status(404).send({ message: 'Faculty not found' });
+      }
+      res.status(200).send(faculty);
   } catch (error) {
-    res.status(500).send(error);
+      res.status(500).send({ message: 'Server error' });
   }
 });
 

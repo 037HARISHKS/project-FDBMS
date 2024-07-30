@@ -36,6 +36,7 @@ import Eventpage from './pages/DisplayEvents';
 import AddEvents from './pages/Event';
 import EventForm from './pages/AddEvents';
 import View from './pages/viewFaculty';
+import DashboardView from './pages/dashboardView';
 
 function App() {
   return (
@@ -77,6 +78,7 @@ function App() {
             <Route path='/modifyEvents' element={<AddEvents/>}/>
             <Route path='/eventform' element={<EventForm/>}/>
             <Route path='/viewfaculty' element={<View/>}/>
+            <Route path='/dashboardview' element={<DashboardView/>}/>
           </Routes>
           <Footer/>
       </BrowserRouter>
